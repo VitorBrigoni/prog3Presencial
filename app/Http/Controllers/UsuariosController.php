@@ -24,10 +24,10 @@ class UsuariosController extends Controller
     {
         $usuario = new Usuario();
 
-        $usuario->nome = $form->nome;
+        $usuario->name = $form->name;
         $usuario->email = $form->email;
-        $usuario->usuario = $form->usuario;
-        $usuario->senha = Hash::make($form->senha);
+        $usuario->username = $form->username;
+        $usuario->password = Hash::make($form->password);
 
         $usuario->save();
 
@@ -40,20 +40,20 @@ class UsuariosController extends Controller
         // Está enviando o formulário
         if ($form->isMethod('POST'))
         {
-            $usuario = $form->usuario;
-            $senha = $form->senha;
+            $usuario = $form->username;
+            $senha = $form->password;
 
-            $consulta = Usuario::select('id', 'nome', 'email', 'usuario', 'senha')->where('usuario', $usuario)->get();
+            $consulta = Usuario::select('id', 'name', 'email', 'username', 'password')->where('username', $usuario)->get();
 
             // Confere se encontrou algum usuário
             if ($consulta->count())
             {
                 // Confere se a senha está correta
-                if (Hash::check($senha, $consulta[0]->senha))
+                if (Hash::check($senha, $consulta[0]->password))
                 {
-                    unset($consulta[0]->senha);
+                    unset($consulta[0]->password);
 
-                    session()->put('usuario', $consulta[0]);
+                    session()->put('username', $consulta[0]);
 
                     return redirect()->route('home');
                 }
@@ -68,7 +68,7 @@ class UsuariosController extends Controller
 
     public function logout()
     {
-        session()->forget('usuario');
+        session()->forget('username');
         return redirect()->route('home');
     }
 }
