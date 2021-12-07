@@ -30,4 +30,8 @@ class Usuario extends Model implements Authenticatable
     public function getRememberTokenName(){
 
     }
+
+    protected $hidden = [
+        'password',
+       ];
 }
