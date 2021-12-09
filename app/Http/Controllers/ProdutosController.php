@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Produto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProdutosController extends Controller
 {
@@ -40,7 +41,11 @@ class ProdutosController extends Controller
 
     public function edit(Produto $prod)
     {
-        return view('produtos.edit', ['prod' => $prod, 'pagina' => 'produtos']);
+        if(Auth::user() && Auth::user()->admin){
+            return view('produtos.edit', ['prod' => $prod, 'pagina' => 'produtos']);
+        }else{
+            return redirect()->route('login');
+        }
     }
 
     public function update(Request $form, Produto $prod)
@@ -56,7 +61,11 @@ class ProdutosController extends Controller
 
     public function remove(Produto $prod)
     {
-        return view('produtos.remove', ['prod' => $prod, 'pagina' => 'produtos']);
+        if(Auth::user() && Auth::user()->admin){
+            return view('produtos.remove', ['prod' => $prod, 'pagina' => 'produtos']);
+        }else{
+            return redirect()->route('login');
+        }
     }
 
     public function delete(Produto $prod)

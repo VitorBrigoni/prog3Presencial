@@ -71,7 +71,6 @@ class UsuariosController extends Controller
 
             if(Auth::attempt($credenciais)){
                 session()->regenerate();
-                dd(Auth::user());
                 return redirect()->route('home');
             }else{
                 return redirect()->route('login')->with('erro', 'Usuário ou senha inválidos.');
@@ -83,7 +82,7 @@ class UsuariosController extends Controller
 
     public function logout()
     {
-        session()->forget('username');
+        Auth::logout();
         return redirect()->route('home');
     }
 }
