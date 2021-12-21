@@ -4,6 +4,8 @@ use App\Http\Controllers\ProdutosController;
 use App\Http\Controllers\UsuariosController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,3 +61,13 @@ Route::get('/email/verify/{id}/{hash}', function
  $request->fulfill();
  return redirect()->route('home');
 })->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::get('/profile', [UsuariosController::class, 'profile'])->name('usuarios.perfil')->middleware('auth');
+
+Route::get('/profile/edit', [UsuariosController::class, 'edit'])->name('usuarios.editar')->middleware('auth');
+
+Route::post('/profile/edit', [UsuariosController::class, 'alterar'])->name('usuarios.alterar')->middleware('auth');
+
+Route::get('/profile/password', [UsuariosController::class, 'password'])->name('usuarios.senha')->middleware('auth');
+
+Route::post('/profile/password', [UsuariosController::class, 'senha'])->name('usuarios.password')->middleware('auth');
