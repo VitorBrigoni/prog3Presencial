@@ -4,6 +4,14 @@
 
 @section('content')
 
+@if(Auth::user()->email_verified_at == null)
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-danger">Confirme seu Email, Por Favor!</div>
+        </div>
+    </div>
+@endif
+
 <div class="row">
     <div class="col">
         <p>Nome: {{Auth::user()->name}}</p>

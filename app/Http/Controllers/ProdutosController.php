@@ -30,9 +30,12 @@ class ProdutosController extends Controller
     {
         $prod = new Produto();
 
+        $imagemCaminho = $form->file('imagem')->store('', 'imagens');
+
         $prod->nome = $form->nome;
         $prod->preco = $form->preco;
         $prod->descricao = $form->descricao;
+        $prod->imagem = $imagemCaminho;
 
         $prod->save();
 
